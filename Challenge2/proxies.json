@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json.schemastore.org/proxies",
+    "proxies": {
+        "proxy1": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/test"
+            },
+            "responseOverrides": {
+                "response.body":"Test",
+                "response.statusCode": "200"
+            }
+        }
+    }
+}
