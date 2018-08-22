@@ -11,6 +11,16 @@
       ]
     },
     {
+      "direction": "out",
+      "type": "cosmosDB",
+      "name": "docs",
+      "databaseName": "pythonchallenge2",
+      "collectionName": "ratings",
+      "leaseCollectionName": "leases",
+      "createIfNotExists": true,
+      "connectionStringSetting": "CosmosDBConnection"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "$return"

@@ -5,8 +5,9 @@ import requests
 import uuid
 import time
 import datetime
+import json
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
+def main(req: func.HttpRequest, docs: func.Out[func.Document]) -> func.HttpResponse:
 
     getProducturl = "http://serverlessohproduct.trafficmanager.net/api/GetProduct"
     getUserurl = "http://serverlessohuser.trafficmanager.net/api/GetUser"
@@ -61,25 +62,36 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         ts = time.time()
 
         userVerifyRequest = requests.get(url=getUserurl, params={'userId': userId})
-        userData = userVerifyRequest.json()
+        userData = {}
+        try:
+            userData = userVerifyRequest.json()
+        except:
+            return func.HttpResponse("Cannot validate userID")
+
         if 'userId' not in userData:
             return func.HttpResponse("Cannot validate userID")
 
         productVerifyRequest = requests.get(url=getProducturl, params={'productId': productId})
-        productData = productVerifyRequest.json()
+        productData = []
+        try:
+            productData = productVerifyRequest.json()
+        except:
+            return func.HttpResponse("Cannot validate productID")
         if 'productId' not in productData:
             return func.HttpResponse("Cannot validate productID")
 
         entry = {
-            'id': uuid.uuid4(),
-            'userId': userId,
-            'productId': productId,
-            'timestamp': datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),
-            'locationName': locationName,
-            'rating': rating,
-            'userNotes': userNotes
+            'userId': str(userId),
+            'id': str(uuid.uuid4()),
+            'productId': str(productId),
+            'timestamp': str(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')),
+            'locationName': str(locationName),
+            'rating': str(rating),
+            'userNotes': str(userNotes)
         }
+        docs.set(func.Document.from_json(json.dumps(entry)))
         return func.HttpResponse(f"Success! ID: {entry['id']} for UserID: {userId}")
+
     else:
         return func.HttpResponse(
              "Please pass a name on the query string or in the request body",
