@@ -8,8 +8,16 @@ def main(req: func.HttpRequest,
 
     name = req.params.get('userId')
 
+    output = "["
+
+    for row in docs:
+        if name in row.to_json():
+            output += row.to_json() + ","
+
+    output = output[:-1] + "]"
+
     if name:
-        return func.HttpResponse(docs[0].to_json())
+        return func.HttpResponse(output)
     else:
         return func.HttpResponse(
              "Please pass a userId on the query string",
