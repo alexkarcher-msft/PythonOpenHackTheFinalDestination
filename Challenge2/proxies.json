@@ -4,12 +4,23 @@
         "proxy1": {
             "matchCondition": {
                 "methods": [ "GET" ],
-                "route": "/api/test"
+                "route": "/api/GetProducts"
             },
-            "responseOverrides": {
-                "response.body":"Test",
-                "response.statusCode": "200"
-            }
+            "backendUri": "http://serverlessohproduct.trafficmanager.net/api/GetProducts"
+        },
+        "proxy2": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/GetProduct"
+            },
+            "backendUri": "http://serverlessohproduct.trafficmanager.net/api/GetProduct"
+        },
+        "proxy3": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/GetUser"
+            },
+            "backendUri": "http://serverlessohuser.trafficmanager.net/api/GetUser"
         }
     }
 }
