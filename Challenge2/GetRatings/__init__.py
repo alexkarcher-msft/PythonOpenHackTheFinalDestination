@@ -17,7 +17,9 @@ def main(req: func.HttpRequest,
     output = output[:-1] + "]"
 
     if name:
-        return func.HttpResponse(output)
+        return func.HttpResponse(
+            output, headers={"Content-Type":"application/json"}
+            )
     else:
         return func.HttpResponse(
              "Please pass a userId on the query string",
