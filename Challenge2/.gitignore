@@ -18,7 +18,7 @@ project.lock.json
 /App_Data
 /secrets
 /data
-/.python_packages
+/.python_packages/*
 .secrets
 appsettings.json
 local.settings.json
