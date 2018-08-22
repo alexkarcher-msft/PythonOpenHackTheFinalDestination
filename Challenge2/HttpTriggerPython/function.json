@@ -1,0 +1,30 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "direction": "in",
+      "type": "cosmosDB",
+      "name": "docs",
+      "databaseName": "pythonchallenge2",
+      "collectionName": "ratings",
+      "leaseCollectionName": "leases",
+      "createLeaseCollectionIfNotExists": true,
+      "connectionStringSetting": "CosmosDBConnection"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ]
+}
